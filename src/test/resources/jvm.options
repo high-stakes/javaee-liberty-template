@@ -1,0 +1,12 @@
+-Xms8m
+-Xmx32m
+-Xss128k
+-XX:MaxHeapFreeRatio=10
+-XX:MinHeapFreeRatio=10
+-XX:MetaspaceSize=16m
+-XX:MaxMetaspaceSize=128m
+-XX:MaxMetaspaceFreeRatio=5
+-XX:MinMetaspaceFreeRatio=5
+-XX:MinMetaspaceExpansion=0
+-XX:MaxMetaspaceExpansion=16m
+-Xmaxjitcodesize8m

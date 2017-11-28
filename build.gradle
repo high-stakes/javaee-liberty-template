@@ -1,0 +1,77 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'net.wasdev.wlp.gradle.plugins:liberty-gradle-plugin:2.0.1'
+    }
+}
+
+group = 'com.avatao.javaee'
+version = '1.0.0-SNAPSHOT'
+
+apply plugin: 'war'
+apply plugin: 'liberty'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+configurations {
+    jdbcDriver
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+    testCompile group: 'org.jboss.arquillian.junit', name: 'arquillian-junit-container', version:'1.1.14.Final'
+    testCompile group: 'org.jboss.arquillian.container', name: 'arquillian-wlp-managed-lite-8.5', version:'1.0.0.Beta2'
+    testCompile group: 'org.jboss.shrinkwrap', name: 'shrinkwrap-api', version: '1.2.6'
+    testCompile group: 'org.jboss.shrinkwrap.resolver', name: 'shrinkwrap-resolver-impl-maven', version:'2.2.0'
+
+    providedCompile group: 'javax', name: 'javaee-api', version:'7.0'
+
+    libertyRuntime group: 'io.openliberty', name: 'openliberty-runtime', version:'17.0.0.3'
+    jdbcDriver group: 'com.h2database', name: 'h2', version: '1.4.196'
+}
+
+ext {
+    wlpHome = "${rootDir}/build/wlp"
+}
+
+war {
+    archiveName = "app" + '.' + extension
+}
+
+liberty {
+    server {
+        dropins = [war]
+        configFile = file('src/test/resources/server-local.xml')
+        jvmOptionsFile = file('src/test/resources/jvm.options')
+    }
+}
+
+task installDriver(type: Copy) {
+    from configurations.jdbcDriver
+    into "${wlpHome}/usr/shared/resources"
+}
+
+installLiberty {
+    finalizedBy 'installDriver'
+}
+
+test {
+    dependsOn 'libertyStart'
+    systemProperties = [
+        'wlp.home' : wlpHome,
+        'javax.net.ssl.trustStore' : "${wlpHome}/usr/servers/testServer/resources/security/key.jks",
+        'javax.net.ssl.trustStorePassword' : 'password',
+        'org.jboss.arquillian.container.was.wlp_managed_8_5.allowConnectingToRunningServer' : 'true'
+    ]
+    finalizedBy 'libertyStop'
+}
+
+clean {
+    dependsOn 'libertyStop'
+}

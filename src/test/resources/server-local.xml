@@ -1,0 +1,24 @@
+<server description="Liberty test server">
+    <featureManager>
+        <feature>cdi-1.2</feature>
+        <feature>jpa-2.1</feature>
+        <feature>jsf-2.2</feature>
+    </featureManager>
+
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443"/>
+
+    <applicationMonitor updateTrigger="mbean" />
+
+    <cdi12 enableImplicitBeanArchives="false"/>
+    <executor coreThreads="1" keepAlive="5s"/>
+    <connectionManager maxPoolSize="4" />
+
+    <jdbcDriver id="h2_driver" javax.sql.DataSource="org.h2.jdbcx.JdbcDataSource" libraryRef="h2_lib"/>
+    <dataSource id="DefaultDataSource" type="javax.sql.DataSource" jdbcDriverRef="h2_driver">
+        <properties URL="jdbc:h2:${shared.resource.dir}/h2.db:test" databaseName="test" user="sa" password="sa"/>
+    </dataSource>
+
+    <library id="h2_lib">
+        <fileset dir="${shared.resource.dir}" includes="*.jar" />
+    </library>
+</server>
