@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @RunWith(Arquillian.class)
-public class EntityTest {
+public class EntityIT {
     
     @Deployment
     public static WebArchive createDeployment() {
