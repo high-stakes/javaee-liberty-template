@@ -70,6 +70,9 @@ test {
         'org.jboss.arquillian.container.was.wlp_managed_8_5.allowConnectingToRunningServer' : 'true'
     ]
     finalizedBy 'libertyStop'
+
+    minHeapSize = "16m"
+    maxHeapSize = "64m"
 }
 
 clean {

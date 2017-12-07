@@ -11,7 +11,6 @@
 
     <properties>
         <warfile.name>app</warfile.name>
-        <jvm.options>-Xmx32m -Xms16m </jvm.options>
     </properties>
 
     <dependencyManagement>
@@ -72,9 +71,8 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.3</version>
                     <configuration>
-                        <compilerArgs>
-                            <arg>${jvm.options}</arg>
-                        </compilerArgs>
+                        <meminitial>8m</meminitial>
+                        <maxmem>32m</maxmem>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -82,7 +80,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.19.1</version>
                     <configuration>
-                        <argLine>${jvm.options}</argLine>
+                        <argLine>-Xmx32m -Xms8m</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -215,7 +213,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <argLine>-Dwlp.home=${project.build.directory}/liberty/wlp</argLine>
-                    <argLine>${jvm.options}</argLine>
+                    <argLine>-Xmx32m -Xms8m</argLine>
                 </configuration>
                 <executions>
                     <execution>
