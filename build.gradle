@@ -47,8 +47,8 @@ war {
 liberty {
     server {
         dropins = [war]
-        configFile = file('src/test/resources/server-local.xml')
-        jvmOptionsFile = file('src/test/resources/jvm.options')
+        configFile = file('etc/container/server-local.xml')
+        jvmOptionsFile = file('etc/container/jvm.options')
     }
 }
 
