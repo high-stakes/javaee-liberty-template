@@ -3,6 +3,8 @@
         <feature>cdi-1.2</feature>
         <feature>jpa-2.1</feature>
         <feature>jsf-2.2</feature>
+        <feature>jndi-1.0</feature>
+        <feature>localConnector-1.0</feature>
     </featureManager>
 
     <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443"/>

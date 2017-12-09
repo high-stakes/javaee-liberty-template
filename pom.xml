@@ -10,6 +10,8 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <warfile.name>app</warfile.name>
     </properties>
 
@@ -34,7 +36,7 @@
         </dependency>
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-wlp-managed-lite-8.5</artifactId>
+            <artifactId>arquillian-wlp-managed-8.5</artifactId>
             <version>1.0.0.Beta2</version>
             <scope>test</scope>
         </dependency>
@@ -63,7 +65,6 @@
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -94,7 +95,6 @@
                     <version>2.6</version>
                     <configuration>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
-                        <attachClasses>true</attachClasses>
                         <warName>${warfile.name}</warName>
                     </configuration>
                 </plugin>
@@ -212,13 +212,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
-                    <argLine>-Dwlp.home=${project.build.directory}/liberty/wlp</argLine>
-                    <argLine>-Xmx32m -Xms8m</argLine>
+                    <argLine>-Xmx32m -Xms8m -Dwlp.home=${project.build.directory}/liberty/wlp -Dorg.jboss.arquillian.container.was.wlp_managed_8_5.allowConnectingToRunningServer=true</argLine>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>verify</goal>
+                            <goal>integration-test</goal>
                         </goals>
                     </execution>
                 </executions>
